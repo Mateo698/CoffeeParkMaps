@@ -30,6 +30,12 @@ public class Graph<T> {
 		}
 	}
 	
-
+	public void Dijstra() {
+		
+	}
+	
+	public void Floyd() {
+		
+	}
 	
 }
