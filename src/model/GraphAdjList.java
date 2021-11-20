@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 public class GraphAdjList<T> {
 	private Hashtable<T,LinkedList<Edge<T>>> nodes;
@@ -47,7 +50,25 @@ public class GraphAdjList<T> {
 	}
 	
 	
-	public void Dijstra() {
+	public void Dijstra(T src,ArrayList<T> keys) {
+		Hashtable<T, Integer> dist = new Hashtable<>();
+		dist.put(src, 0);
+		for (int i = 1; i < keys.size(); i++) {
+			dist.put(keys.get(i), Integer.MAX_VALUE);
+		}
+		PriorityQueue<PriorityNode<T>> pq = new PriorityQueue<PriorityNode<T>>();
+		for (int i = 0; i < keys.size(); i++) {
+			pq.add(new PriorityNode<T>(keys.get(i),dist.get(keys.get(i))));
+		}
+		Hashtable<T, T> prev = new Hashtable<>();
+		for (int i = 0; i < keys.size(); i++) {
+			prev.put(keys.get(i), null);
+		}
+		
+		
+		while(!pq.isEmpty()) {
+			PriorityNode<T> u = pq.poll();
+		}
 		
 	}
 	
