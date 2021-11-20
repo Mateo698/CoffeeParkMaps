@@ -3,11 +3,11 @@ package model;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-public class Graph<T> {
+public class GraphAdjList<T> {
 	private Hashtable<T,LinkedList<Edge<T>>> nodes;
 	private boolean directed;
 	
-	public Graph(boolean directed) {
+	public GraphAdjList(boolean directed) {
 		nodes = new Hashtable<T,LinkedList<Edge<T>>>();
 		this.directed = directed;
 	}
@@ -29,6 +29,23 @@ public class Graph<T> {
 			nodes.get(end).add(new Edge<T>(start,weight));
 		}
 	}
+	
+	public boolean hasVertex(T object) {
+		if(nodes.containsKey(object)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean hasEdge(T init,T end) {
+		if(nodes.get(init).contains(end)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	
 	public void Dijstra() {
 		

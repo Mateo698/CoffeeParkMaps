@@ -1,5 +1,5 @@
 package model;
 
 public class Maps {
-	private Graph<Atracction> attractions;
+	private GraphAdjList<Atracction> attractions;
 }
