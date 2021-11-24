@@ -53,7 +53,7 @@ public class GraphAdjList<T> {
 	}
 	
 	
-	public void Dijstra(T src,ArrayList<T> keys) {
+	public DijstraResults<T> Dijstra(T src,ArrayList<T> keys) {
 		Hashtable<T, Integer> dist = new Hashtable<>();
 		dist.put(src, 0);
 		for (int i = 0; i < keys.size(); i++) {
@@ -70,7 +70,7 @@ public class GraphAdjList<T> {
 			prev.put(keys.get(i), null);
 		}
 		
-		
+		T lastOne = null;
 		while(!pq.isEmpty()) {
 			PriorityNode<T> u = pq.poll();
 			LinkedList<Edge<T>> adjNodes = nodes.get(u.getObject());
@@ -81,10 +81,12 @@ public class GraphAdjList<T> {
 					dist.put(v, alt);
 					prev.put(v, u.getObject());
 					pq = updateQueue(pq);
+					lastOne = v;
 				}
 			}
 		}
-		
+		DijstraResults<T> results = new DijstraResults<T>(dist, prev, lastOne);
+		return results;
 	}
 	
 	public void Floyd() {
