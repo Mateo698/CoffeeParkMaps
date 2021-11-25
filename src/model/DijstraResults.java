@@ -5,10 +5,12 @@ import java.util.Hashtable;
 public class DijstraResults<T> {
 	private Hashtable<T, Integer> dist;
 	private Hashtable<T, T> prev;
+	private T lastOne;
 	
-	public DijstraResults(Hashtable<T, Integer> dist, Hashtable<T, T> prev){
+	public DijstraResults(Hashtable<T, Integer> dist, Hashtable<T, T> prev,T lastOne){
 		this.setDist(dist);
 		this.setPrev(prev);
+		this.setLastOne(lastOne);
 	}
 
 	public Hashtable<T, Integer> getDist() {
@@ -25,5 +27,13 @@ public class DijstraResults<T> {
 
 	public void setPrev(Hashtable<T, T> prev) {
 		this.prev = prev;
+	}
+
+	public T getLastOne() {
+		return lastOne;
+	}
+
+	public void setLastOne(T lastOne) {
+		this.lastOne = lastOne;
 	}
 }
