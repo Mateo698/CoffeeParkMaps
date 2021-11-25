@@ -1,4 +1,4 @@
-package model;
+   package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,12 @@ public class GraphAdjList<T> {
 		nodes.put(object,new LinkedList<Edge<T>>());
 		keys.add(object);
 	}
-	
+	public int getNodesAmount() {
+		return nodes.size();
+	}
+	public Hashtable<T,LinkedList<Edge<T>>> getNodes(){
+		return nodes;
+	}
 	public void addEdge(T start, T end,int weight) {
 		if(!nodes.containsKey(start)) {
 			addVertex(start);
@@ -29,7 +34,6 @@ public class GraphAdjList<T> {
 		if(!nodes.containsKey(end)) {
 			addVertex(end);
 		}
-		
 		nodes.get(start).add(new Edge<T>(end,weight));
 		if(!directed) {
 			nodes.get(end).add(new Edge<T>(start,weight));

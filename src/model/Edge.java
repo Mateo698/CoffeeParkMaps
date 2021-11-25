@@ -9,6 +9,7 @@ public class Edge<T> {
 		this.weight = w;
 	}
 	
+	
 	public T getValue() {
 		return adjNode;
 	}
