@@ -35,7 +35,7 @@ public class GraphAdjList<T> {
 			nodes.get(end).add(new Edge<T>(start,weight));
 		}
 	}
-	
+	/*
 	public boolean hasVertex(T object) {
 		if(nodes.containsKey(object)) {
 			return true;
@@ -43,7 +43,8 @@ public class GraphAdjList<T> {
 			return false;
 		}
 	}
-	
+	*/
+	/*
 	public boolean hasEdge(T init,T end) {
 		if(nodes.get(init).contains(end)) {
 			return true;
@@ -51,7 +52,7 @@ public class GraphAdjList<T> {
 			return false;
 		}
 	}
-	
+	*/
 	
 	public DijstraResults<T> Dijstra(T src,ArrayList<T> keys) {
 		Hashtable<T, Integer> dist = new Hashtable<>();
@@ -89,7 +90,7 @@ public class GraphAdjList<T> {
 		return results;
 	}
 	
-	public void Floyd() {
+	public int[][] Floyd() {
 		int dist[][] = new int[nodes.keySet().size()][nodes.keySet().size()];
 		for (int i = 0; i < dist.length; i++) {
 			for (int j = 0; j < dist.length; j++) {
@@ -115,6 +116,7 @@ public class GraphAdjList<T> {
 				}
 			}
 		}
+		return dist;
 	}
 	
 	
