@@ -71,8 +71,9 @@ public class GraphAdjList<T> {
 			pq.add(new PriorityNode<T>(keys.get(i),dist.get(keys.get(i))));
 		}
 		Hashtable<T, T> prev = new Hashtable<>();
+		
 		for (int i = 0; i < keys.size(); i++) {
-			prev.put(keys.get(i), null);
+			prev.put(keys.get(i), keys.get(i));
 		}
 		
 		T lastOne = null;

@@ -53,9 +53,9 @@ class GraphAdjListTest {
 		setupScenary1();
 		park.addEdge(g2, g3, 38);
 		park.addEdge(g3, g1, 50);
-	//	assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g1),0);
-		//assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g2),12);
-	//	assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g3),50);
+		assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g1),0);
+		assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g2),12);
+		assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g3),50);
 	}
 	
 	@Test
