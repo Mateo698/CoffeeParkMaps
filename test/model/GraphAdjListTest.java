@@ -65,6 +65,14 @@ class GraphAdjListTest {
 		park.addEdge(g3, g1, 50);
 		int[][] a = park.Floyd();
 		assertEquals(a[0][0],0);
+		assertEquals(a[0][1],12);
+		assertEquals(a[0][2],50);
+		assertEquals(a[1][0],12);
+		assertEquals(a[1][1],0);
+		assertEquals(a[1][2],38);
+		assertEquals(a[2][2],0);
+		assertEquals(a[2][1],38);
+		assertEquals(a[2][0],50);
 	}
 
 }
