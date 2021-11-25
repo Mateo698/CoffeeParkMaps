@@ -107,7 +107,7 @@ public class GraphAdjList<T> {
 		for (int i = 0; i < dist.length; i++) {
 			LinkedList<Edge<T>> edges = nodes.get(keys.get(i));
 			for (int j = 0; j < edges.size(); j++) {
-				int posJ = keys.indexOf(edges.get(j));
+				int posJ = keys.indexOf(edges.get(j).getValue());
 				dist[i][posJ] = edges.get(j).getWeight();
 			} 
 		}
