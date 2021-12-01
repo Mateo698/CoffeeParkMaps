@@ -53,7 +53,7 @@ public class ParksGUI {
 	private ChoiceBox<Atracction> comboBoxSelection;
 
 	@FXML
-	private ListView<Atracction> listViewAtracctionPath;
+	private ListView<String> listViewAtracctionPath;
 
 	private ArrayList<Atracction> atracc;
 	
@@ -86,8 +86,7 @@ public class ParksGUI {
 		if(!listViewAtracctionSelected.getItems().isEmpty()) {
 			ArrayList<Atracction> at = new ArrayList<>();
 			at.addAll(listViewAtracctionSelected.getItems());
-			at.addAll(park.getPath(park.getAtracctionsList().get(14), at));
-			ObservableList<Atracction> atracct = FXCollections.observableArrayList(at);
+			ObservableList<String> atracct = FXCollections.observableArrayList(park.getPath(park.getAtracctionsList().get(17), at));
 			listViewAtracctionPath.setItems(atracct);
 		}else {
 			Alert alertWarnings = new Alert(AlertType.WARNING);
