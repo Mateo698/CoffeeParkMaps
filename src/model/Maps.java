@@ -83,11 +83,11 @@ public class Maps {
 			Hashtable<Atracction, Atracction> prev = results.getPrev();
 			Atracction end = results.getLastOne();
 			boolean leave = false;
-			Atracction closest = null;
 			previous = prev.get(end);
+			Atracction closest = previous;
 			while(!leave) {
 				previous_two = prev.get(end);
-				if(desiredAt.indexOf(previous)!=-1) {
+				if(desiredAt.indexOf(previous)!=-1 && park.getEdge(src, previous)<=park.getEdge(src, closest) ) {
 					closest = previous;
 				}
 				if(previous_two == previous) {

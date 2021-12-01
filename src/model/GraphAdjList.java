@@ -62,6 +62,17 @@ public class GraphAdjList<T> {
 	}
 	*/
 	
+	public int getEdge(T init, T end) {
+		LinkedList<Edge<T>> edges = nodes.get(init);
+		int result = Integer.MAX_VALUE;
+		for (int i = 0; i < edges.size(); i++) {
+			if(edges.get(i).getValue() == end) {
+				result = edges.get(i).getWeight();
+			}
+		}
+		return result;
+	}
+	
 	public DijstraResults<T> Dijstra(T src,ArrayList<T> keys) {
 		Hashtable<T, Integer> dist = new Hashtable<>();
 		dist.put(src, 0);
