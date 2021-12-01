@@ -50,7 +50,11 @@ public class Atracction implements Comparable<Atracction>{
 
 	@Override
 	public int compareTo(Atracction o) {
-		// TODO Auto-generated method stub
+		if(o.getName() == name) {
+			return 0;
+		}else {
+			
+		}
 		return 0;
 	}
 	

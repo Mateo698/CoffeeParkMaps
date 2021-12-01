@@ -87,29 +87,6 @@ public class GraphAdjList<T extends Comparable<T>>
 		return true;
 	}
 
-	
-	public boolean DepthFirstSearch(){
-		if (vertices.isEmpty()) return false;
-
-		clearStates();
-		Vertex root = vertices.get(0);
-		if (root==null) return false;
-		DepthFirstSearch(root);
-		return isConnected();
-	}
-
-	
-	private void DepthFirstSearch(Vertex v){
-		v.state = State.VISITED;
-		for (Vertex each : v.outgoing)
-		{
-			if (each.state ==State.UNVISITED)
-			{
-				DepthFirstSearch(each);
-			}
-		}
-		v.state = State.COMPLETE;
-	}
 
 	
 	public boolean BreadthFirstSearch(){
@@ -258,17 +235,6 @@ public class GraphAdjList<T extends Comparable<T>>
 		for (Vertex each : vertices)
 		{
 			retval += each.toString() + "\n";
-		}
-		return retval;
-	}
-
-
-	public String edgesToString()
-	{
-		String retval = "";
-		for (Edge each : edges)
-		{
-			retval += each + "\n";
 		}
 		return retval;
 	}

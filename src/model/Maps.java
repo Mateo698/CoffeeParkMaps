@@ -1,9 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.PriorityQueue;
-import java.util.Stack;
+import java.util.List;
 
 public class Maps {
 	
@@ -69,7 +67,15 @@ public class Maps {
 		return atracctionsList;
 	}
 
-	public PriorityQueue<Atracction> getPath(Atracction src, ArrayList<Atracction> desiredAt) {
+	public ArrayList<String> getPath(Atracction src, ArrayList<Atracction> desiredAt) {
+		ArrayList<String> path = new ArrayList<>();
+		for(int i = 0;i<desiredAt.size();i++) {
+			List<String> subPath = park.getPath(src, desiredAt.get(i));
+			for (int j = 0; j < subPath.size(); j++) {
+				path.add(subPath.get(j));
+			}
+			src = desiredAt.get(i);
+		}
 		return null;
 	}
 
