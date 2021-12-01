@@ -88,8 +88,8 @@ public class ParksGUI {
 		if(!listViewAtracctionSelected.getItems().isEmpty()) {
 			ArrayList<Atracction> at = new ArrayList<>();
 			at.addAll(listViewAtracctionSelected.getItems());
-			path.addAll(park.getPath(park.getAtracctionsList().get(17), at));
-			initListResultsView(path);
+			ObservableList<String> atracct = FXCollections.observableArrayList(park.getPath(park.getAtracctionsList().get(14), at));
+			listViewAtracctionPath.setItems(atracct);
 		}else {
 			Alert alertWarnings = new Alert(AlertType.WARNING);
 			alertWarnings.setTitle("Error");

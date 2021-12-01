@@ -13,7 +13,10 @@ public class GraphAdjList<T extends Comparable<T>>
 
 	private ArrayList<Vertex> vertices;
 	private ArrayList<Edge> edges;
-
+	
+	public ArrayList<Vertex> getVertices(){
+		return vertices;
+	}
 	
 	public GraphAdjList()	{
 		vertices = new ArrayList<>();
@@ -29,9 +32,10 @@ public class GraphAdjList<T extends Comparable<T>>
 			temp.cost = cost;
 		}
 		else{
-			
 			Edge e = new Edge(from, to, cost);
+			Edge e_two = new Edge(to,from,cost);
 			edges.add(e);
+			edges.add(e_two);
 		}
 	}
 
@@ -59,9 +63,8 @@ public class GraphAdjList<T extends Comparable<T>>
 
 	
 	private Edge findEdge(T from, T to){
-		for (Edge each : edges)
-		{
-			if (each.from.value.equals(from) && each.to.value.equals(to))
+		for (Edge each : edges){
+			if (each.isEdge(from, to))
 			{
 				return each;
 			}
@@ -154,9 +157,9 @@ public class GraphAdjList<T extends Comparable<T>>
 
 		
 		Vertex source = findVertex(v1);
-		if (source==null) return false;
-
-	
+		if (source==null) {
+			return false;
+		}
 		source.minDistance = 0;
 		PriorityQueue<Vertex> pq = new PriorityQueue<>();
 		pq.add(source);
@@ -180,6 +183,7 @@ public class GraphAdjList<T extends Comparable<T>>
 					v.minDistance = totalDistance;
 					v.previous = u;
 					pq.add(v);
+					
 				}
 			}
 		}
@@ -187,8 +191,7 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	private List<String> getShortestPath(Vertex target)
-	{
+	private List<String> getShortestPath(Vertex target){	
 		List<String> path = new ArrayList<String>();
 
 		
@@ -220,10 +223,11 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	public List<String> getPath(T from, T to)
-	{
+	public List<String> getPath(T from, T to){
 		boolean test = Dijkstra(from);
-		if (test==false) return null;
+		if (test==false) {
+			return null;
+		}
 		List<String> path = getShortestPath(findVertex(to));
 		return path;
 	}
@@ -308,16 +312,24 @@ public class GraphAdjList<T extends Comparable<T>>
 			}
 			to = findVertex(v2);
 			if (to == null)
-			{
+			{	
 				to = new Vertex(v2);
 				vertices.add(to);
 			}
 			this.cost = cost;
 
 			from.addOutgoing(to);
-			from.addIncoming(to);
 			to.addIncoming(from);
-			to.addOutgoing(from);
+		}
+		
+		public boolean isEdge(T v1, T v2) {
+			if(v1 == from && v2 == to) {
+				return true;
+			}else if(v1 == to && v2 == from) {
+				return true;
+			}else {
+				return false;
+			}
 		}
 
 		@Override
