@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Maps {
 	
 	private ArrayList<Atracction> atracctionsList;
+
 	private GraphAdjList<Atracction> park;
 	
 	public Maps() {
@@ -35,18 +36,39 @@ public class Maps {
 		park.addEdge(atracctionsList.get(14), atracctionsList.get(15), 5);
 		park.addEdge(atracctionsList.get(13), atracctionsList.get(12), 7);
 		park.addEdge(atracctionsList.get(12), atracctionsList.get(15), 10);
-		park.addEdge(atracctionsList.get(13), atracctionsList.get(15), 10);
+		park.addEdge(atracctionsList.get(13), atracctionsList.get(15), 10);////
 		park.addEdge(atracctionsList.get(15), atracctionsList.get(0), 5);
 		park.addEdge(atracctionsList.get(15), atracctionsList.get(1), 5);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(0), 0);
-		
+		park.addEdge(atracctionsList.get(0), atracctionsList.get(1), 3);
+		park.addEdge(atracctionsList.get(15), atracctionsList.get(3), 9);
+		park.addEdge(atracctionsList.get(15), atracctionsList.get(2), 7);
+		park.addEdge(atracctionsList.get(3), atracctionsList.get(2), 5);
+		park.addEdge(atracctionsList.get(3), atracctionsList.get(4), 7);
+		park.addEdge(atracctionsList.get(2), atracctionsList.get(4), 7);
+		park.addEdge(atracctionsList.get(4), atracctionsList.get(5), 5);
+		park.addEdge(atracctionsList.get(5), atracctionsList.get(9), 10);
+		park.addEdge(atracctionsList.get(9), atracctionsList.get(10), 5);
+		park.addEdge(atracctionsList.get(9), atracctionsList.get(11), 5);
+		park.addEdge(atracctionsList.get(10), atracctionsList.get(11), 5);
+		park.addEdge(atracctionsList.get(5), atracctionsList.get(16), 9);
+		park.addEdge(atracctionsList.get(16), atracctionsList.get(6), 5);
+		park.addEdge(atracctionsList.get(16), atracctionsList.get(7), 5);
+		park.addEdge(atracctionsList.get(16), atracctionsList.get(8), 5);
+		park.addEdge(atracctionsList.get(6), atracctionsList.get(7), 4);
+		park.addEdge(atracctionsList.get(7), atracctionsList.get(8), 4);
+		park.addEdge(atracctionsList.get(15), atracctionsList.get(16), 10);
 	}
+	
+	public ArrayList<Atracction> getAtracctionsList() {
+		return atracctionsList;
+	}
+
+	public DijstraResults<Atracction> getPath(Atracction src) {
+		DijstraResults<Atracction> results = park.Dijstra(src, atracctionsList);
+		return results;
+	}
+	
+	
+
+	
 }
