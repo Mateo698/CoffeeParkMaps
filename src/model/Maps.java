@@ -29,6 +29,7 @@ public class Maps {
 		atracctionsList.add(new Atracction("Museo del cafe", 0, 0));	//14
 		atracctionsList.add(new Atracction("Estacion tren plaza", 0, 0));//15
 		atracctionsList.add(new Atracction("Estacion tren caballos", 0, 0));	//16
+		atracctionsList.add(new Atracction("Entrada", 0, 0));	//17
 		
 		park.add(atracctionsList.get(14), atracctionsList.get(12), 5);
 		park.add(atracctionsList.get(14), atracctionsList.get(13), 10);
@@ -56,6 +57,7 @@ public class Maps {
 		park.add(atracctionsList.get(6), atracctionsList.get(7), 4);
 		park.add(atracctionsList.get(7), atracctionsList.get(8), 4);
 		park.add(atracctionsList.get(15), atracctionsList.get(16), 10);
+		park.add(atracctionsList.get(17), atracctionsList.get(14), 15);
 	}
 	
 	

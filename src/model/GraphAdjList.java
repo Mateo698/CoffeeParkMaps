@@ -193,18 +193,20 @@ public class GraphAdjList<T extends Comparable<T>>
 	
 	private List<String> getShortestPath(Vertex target){	
 		List<String> path = new ArrayList<String>();
-
-		
+	
 		if (target.minDistance==Integer.MAX_VALUE)
 		{
 			path.add("No path found");
 			return path;
 		}
-
 		
-		for (Vertex v = target; v !=null; v = v.previous)
-		{
-			path.add(v.value + " : cost : " + v.minDistance);
+		for (Vertex v = target; v !=null; v = v.previous){
+			if(v.value.toString().equals("Entrada")) {
+				path.add(v.value + "");
+			}else if(v.minDistance!=0){
+				path.add(v.value + " : cost : " + v.minDistance);	
+			}
+				
 		}
 
 		

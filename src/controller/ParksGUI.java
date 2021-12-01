@@ -50,6 +50,9 @@ public class ParksGUI {
 	private Label lblTitle3;
 	
 	@FXML
+	private Label lblMessage;
+	
+	@FXML
 	private ChoiceBox<Atracction> comboBoxSelection;
 
 	@FXML
@@ -88,7 +91,7 @@ public class ParksGUI {
 		if(!listViewAtracctionSelected.getItems().isEmpty()) {
 			ArrayList<Atracction> at = new ArrayList<>();
 			at.addAll(listViewAtracctionSelected.getItems());
-			ObservableList<String> atracct = FXCollections.observableArrayList(park.getPath(park.getAtracctionsList().get(14), at));
+			ObservableList<String> atracct = FXCollections.observableArrayList(park.getPath(park.getAtracctionsList().get(17), at));
 			listViewAtracctionPath.setItems(atracct);
 		}else {
 			Alert alertWarnings = new Alert(AlertType.WARNING);
@@ -118,7 +121,7 @@ public class ParksGUI {
     	atracc = new ArrayList<>();
 		at = new ArrayList<>();
 		atracc.addAll(park.getAtracctionsList());
-		atracc.remove(14);
+		atracc.remove(17);
 		initComboBox();
 		initListView(at);
 		initListResultsView(path);
@@ -138,8 +141,7 @@ public class ParksGUI {
 		lblTitle1.setText("Selected atracctions");
 		lblTitle2.setText("The shortest path to visit all the selected atracctions is");
 		lblTitle3.setText("Just follow this list from start to finish");
-		listViewAtracctionSelected.setDisable(true);
-		listViewAtracctionPath.setDisable(true);
+		lblMessage.setText("The result is given following the order entered by the user");
 		resetValues();
 	}
 }
