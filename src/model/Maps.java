@@ -12,7 +12,7 @@ public class Maps {
 	private GraphAdjList<Atracction> park;
 	
 	public Maps() {
-		park = new GraphAdjList<>(false);
+		park = new GraphAdjList<Atracction>();
 		atracctionsList = new ArrayList<>();
 		atracctionsList.add(new Atracction("Ciclon", 0, 0));			//0
 		atracctionsList.add(new Atracction("Karts Dobles", 0, 0));		//1
@@ -31,7 +31,7 @@ public class Maps {
 		atracctionsList.add(new Atracction("Museo del cafe", 0, 0));	//14
 		atracctionsList.add(new Atracction("Estacion tren plaza", 0, 0));//15
 		atracctionsList.add(new Atracction("Estacion tren caballos", 0, 0));	//16
-		atracctionsList.add(new Atracction("Entrada", 0, 0));	//17
+		
 		for (int i = 0; i < atracctionsList.size(); i++) {
 			park.addVertex(atracctionsList.get(i));
 		}
@@ -40,7 +40,7 @@ public class Maps {
 		park.addEdge(atracctionsList.get(14), atracctionsList.get(15), 5);
 		park.addEdge(atracctionsList.get(13), atracctionsList.get(12), 7);
 		park.addEdge(atracctionsList.get(12), atracctionsList.get(15), 10);
-		park.addEdge(atracctionsList.get(13), atracctionsList.get(15), 10);////
+		park.addEdge(atracctionsList.get(13), atracctionsList.get(15), 10);
 		park.addEdge(atracctionsList.get(15), atracctionsList.get(0), 5);
 		park.addEdge(atracctionsList.get(15), atracctionsList.get(1), 5);
 		park.addEdge(atracctionsList.get(0), atracctionsList.get(1), 3);
@@ -61,8 +61,6 @@ public class Maps {
 		park.addEdge(atracctionsList.get(6), atracctionsList.get(7), 4);
 		park.addEdge(atracctionsList.get(7), atracctionsList.get(8), 4);
 		park.addEdge(atracctionsList.get(15), atracctionsList.get(16), 10);
-		park.addEdge(atracctionsList.get(17), atracctionsList.get(0), 20);
-		park.addEdge(atracctionsList.get(17), atracctionsList.get(4), 10);
 	}
 	
 	
@@ -80,6 +78,7 @@ public class Maps {
 		Atracction previous_two = null;
 		while(!desiredAt.isEmpty()) {
 			DijstraResults<Atracction> results = park.Dijstra(src, atracctionsList);
+			printHash(results.getPrev(),results.getLastOne());
 			Hashtable<Atracction, Atracction> prev = results.getPrev();
 			Atracction end = results.getLastOne();
 			boolean leave = false;
@@ -87,7 +86,8 @@ public class Maps {
 			Atracction closest = null;
 			while(!leave) {
 				previous_two = prev.get(end);
-				if(desiredAt.indexOf(previous)!=-1 && park.getEdge(src, previous)<=park.getEdge(src, closest) ) {
+				System.out.println(previous + " " + previous_two);
+				if(desiredAt.indexOf(previous)!=-1) {
 					closest = previous;
 				}
 				if(previous_two == previous) {
@@ -118,7 +118,14 @@ public class Maps {
 		}
 		return path;
 	}
-	
+
+
+	private void printHash(Hashtable<Atracction, Atracction> prev, Atracction last) {
+		for (int i = 0; i < atracctionsList.size(); i++) {
+			System.out.println(i + " " + prev.get(atracctionsList.get(i)).toString());
+			System.out.println("\n");
+		}
+	}
 	
 
 	

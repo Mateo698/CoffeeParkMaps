@@ -1,154 +1,382 @@
-   package model;
+package model;
 
+import java.util.List;
+import java.util.Queue;
+import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
 
-public class GraphAdjList<T> {
-	private Hashtable<T,LinkedList<Edge<T>>> nodes;
-	private ArrayList<T> keys;
-	private boolean directed;
+@SuppressWarnings("unchecked")
+public class GraphAdjList<T extends Comparable<T>>
+{
+	public enum State { UNVISITED, VISITED, COMPLETE };
+
+	private ArrayList<Vertex> vertices;
+	private ArrayList<Edge> edges;
+
 	
-	public GraphAdjList(boolean directed) {
-		nodes = new Hashtable<T,LinkedList<Edge<T>>>();
-		this.directed = directed;
-		keys = new ArrayList<T>();
+	public GraphAdjList()
+	{
+		vertices = new ArrayList<>();
+		edges = new ArrayList<>();
 	}
+
 	
-	public void addVertex(T object) {
-		nodes.put(object,new LinkedList<Edge<T>>());
-		keys.add(object);
-	}
-	
-	public int getNodesAmount() {
-		return nodes.size();
-	}
-	
-	public Hashtable<T,LinkedList<Edge<T>>> getNodes(){
-		return nodes;
-	}
-	
-	public void addEdge(T start, T end,int weight) {
-		if(!nodes.containsKey(start)) {
-			addVertex(start);
+	public void add(T from, T to, int cost)
+	{
+		Edge temp = findEdge(from, to);
+		if (temp != null)
+		{
+
+			System.out.println("Edge " + from + "," + to + " already exists. Changing cost.");
+			temp.cost = cost;
 		}
-		if(!nodes.containsKey(end)) {
-			addVertex(end);
-		}
-		nodes.get(start).add(new Edge<T>(end,weight));
-		if(!directed) {
-			nodes.get(end).add(new Edge<T>(start,weight));
+		else
+		{
+			
+			Edge e = new Edge(from, to, cost);
+			edges.add(e);
 		}
 	}
+
 	
-	/*
-	public boolean hasVertex(T object) {
-		if(nodes.containsKey(object)) {
-			return true;
-		}else {
-			return false;
+	private Vertex findVertex(T v)
+	{
+		for (Vertex each : vertices)
+		{
+			if (each.value.compareTo(v)==0)
+				return each;
 		}
+		return null;
 	}
-	*/
-	/*
-	public boolean hasEdge(T init,T end) {
-		if(nodes.get(init).contains(end)) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	*/
+
 	
-	public int getEdge(T init, T end) {
-		LinkedList<Edge<T>> edges = nodes.get(init);
-		int result = Integer.MAX_VALUE;
-		for (int i = 0; i < edges.size(); i++) {
-			if(edges.get(i).getValue() == end) {
-				result = edges.get(i).getWeight();
+	private Edge findEdge(Vertex v1, Vertex v2)
+	{
+		for (Edge each : edges)
+		{
+			if (each.from.equals(v1) && each.to.equals(v2))
+			{
+				return each;
 			}
 		}
-		return result;
+		return null;
 	}
+
 	
-	public DijstraResults<T> Dijstra(T src,ArrayList<T> keys) {
-		Hashtable<T, Integer> dist = new Hashtable<>();
-		dist.put(src, 0);
-		for (int i = 0; i < keys.size(); i++) {
-			if(keys.get(i)!=src) {
-				dist.put(keys.get(i), Integer.MAX_VALUE);				
+	private Edge findEdge(T from, T to)
+	{
+		for (Edge each : edges)
+		{
+			if (each.from.value.equals(from) && each.to.value.equals(to))
+			{
+				return each;
 			}
 		}
-		PriorityQueue<PriorityNode<T>> pq = new PriorityQueue<PriorityNode<T>>();
-		for (int i = 0; i < keys.size(); i++) {
-			pq.add(new PriorityNode<T>(keys.get(i),dist.get(keys.get(i))));
+		return null;
+	}
+
+	
+	private void clearStates()
+	{
+		for (Vertex each : vertices)
+		{
+			each.state = State.UNVISITED;
 		}
-		Hashtable<T, T> prev = new Hashtable<>();
-		
-		for (int i = 0; i < keys.size(); i++) {
-			prev.put(keys.get(i), keys.get(i));
+	}
+
+	
+	public boolean isConnected()
+	{
+		for (Vertex each : vertices)
+		{
+			if (each.state != State.COMPLETE)
+				return false;
 		}
+		return true;
+	}
+
+	
+	public boolean DepthFirstSearch()
+	{
+		if (vertices.isEmpty()) return false;
+
+		clearStates();
+		// get first node
+		Vertex root = vertices.get(0);
+		if (root==null) return false;
+
+		// call recursive function
+		DepthFirstSearch(root);
+		return isConnected();
+	}
+
+	
+	private void DepthFirstSearch(Vertex v)
+	{
+		v.state = State.VISITED;
+
+		// loop through neighbors
+		for (Vertex each : v.outgoing)
+		{
+			if (each.state ==State.UNVISITED)
+			{
+				DepthFirstSearch(each);
+			}
+		}
+		v.state = State.COMPLETE;
+	}
+
+	
+	public boolean BreadthFirstSearch()
+	{
+		if (vertices.isEmpty()) return false;
+		clearStates();
+
+		Vertex root = vertices.get(0);
+		if (root==null) return false;
+
+		Queue<Vertex> queue = new LinkedList<>();
+		queue.add(root);
+		root.state = State.COMPLETE;
+
+		while (!queue.isEmpty())
+		{
+			root = queue.peek();
+			for (Vertex each : root.outgoing)
+			{
+
+				if (each.state==State.UNVISITED)
+				{
+					each.state = State.COMPLETE;
+					queue.add(each);
+				}
+			}
+			queue.remove();
+		}
+		return isConnected();
+	}
+
+	
+	public boolean BreadthFirstSearch(T v1)
+	{
+		if (vertices.isEmpty()) return false;
+		clearStates();
+
+		Vertex root = findVertex(v1);
+		if (root==null) return false;
+
+		Queue<Vertex> queue = new LinkedList<>();
+		queue.add(root);
+		root.state = State.COMPLETE;
+
+		while (!queue.isEmpty())
+		{
+			root = queue.peek();
+			for (Vertex each : root.outgoing)
+			{
+
+				if (each.state==State.UNVISITED)
+				{
+					each.state = State.COMPLETE;
+					queue.add(each);
+				}
+			}
+			queue.remove();
+		}
+		return isConnected();
+	}
+
+	
+	private boolean Dijkstra(T v1){
+		if (vertices.isEmpty()) return false;
+
 		
-		T lastOne = null;
-		while(!pq.isEmpty()) {
-			PriorityNode<T> u = pq.poll();
-			LinkedList<Edge<T>> adjNodes = nodes.get(u.getObject());
-			for (int i = 0; i < adjNodes.size(); i++) {
-				T v = adjNodes.get(i).getValue();
-				int alt = dist.get(u.getObject()) + adjNodes.get(i).getWeight();
-				if(alt<dist.get(v)) {
-					dist.put(v, alt);
-					prev.put(v, u.getObject());
-					pq = updateQueue(pq);
-					lastOne = v;
+		resetDistances();
+
+		
+		Vertex source = findVertex(v1);
+		if (source==null) return false;
+
+	
+		source.minDistance = 0;
+		PriorityQueue<Vertex> pq = new PriorityQueue<>();
+		pq.add(source);
+
+		while (!pq.isEmpty())
+		{
+			
+			Vertex u = pq.poll();
+
+			
+			for (Vertex v : u.outgoing)
+			{
+				
+				Edge e = findEdge(u, v);
+				if (e==null) return false;
+				
+				int totalDistance = u.minDistance + e.cost;
+				if (totalDistance < v.minDistance)
+				{
+					pq.remove(v);
+					v.minDistance = totalDistance;
+					v.previous = u;
+					pq.add(v);
 				}
 			}
 		}
-		DijstraResults<T> results = new DijstraResults<T>(dist, prev, lastOne);
-		return results;
+		return true;
 	}
+
 	
-	public int[][] Floyd() {
-		int dist[][] = new int[nodes.keySet().size()][nodes.keySet().size()];
-		for (int i = 0; i < dist.length; i++) {
-			for (int j = 0; j < dist.length; j++) {
-				dist[i][j] = Integer.MAX_VALUE;
-			}
+	private List<String> getShortestPath(Vertex target)
+	{
+		List<String> path = new ArrayList<String>();
+
+		
+		if (target.minDistance==Integer.MAX_VALUE)
+		{
+			path.add("No path found");
+			return path;
 		}
-		for (int i = 0; i < dist.length; i++) {
-			dist[i][i] = 0;
+
+		
+		for (Vertex v = target; v !=null; v = v.previous)
+		{
+			path.add(v.value + " : cost : " + v.minDistance);
 		}
-		for (int i = 0; i < dist.length; i++) {
-			LinkedList<Edge<T>> edges = nodes.get(keys.get(i));
-			for (int j = 0; j < edges.size(); j++) {
-				int posJ = keys.indexOf(edges.get(j).getValue());
-				dist[i][posJ] = edges.get(j).getWeight();
-			} 
-		}
-		for (int k = 0;  k< dist.length; k++) {
-			for (int i = 0; i < dist.length; i++) {
-				for (int j = 0; j < dist.length; j++) {
-					if(dist[i][j]>(dist[i][k]+dist[k][j])) {
-						dist[i][j] = dist[i][k]+dist[k][j];
-					}
-				}
-			}
-		}
-		return dist;
+
+		
+		Collections.reverse(path);
+		return path;
 	}
+
 	
+	private void resetDistances()
+	{
+		for (Vertex each : vertices)
+		{
+			each.minDistance = Integer.MAX_VALUE;
+			each.previous = null;
+		}
+	}
+
 	
-	private PriorityQueue<PriorityNode<T>> updateQueue(PriorityQueue<PriorityNode<T>> queue){
-		ArrayList<PriorityNode<T>> list = new ArrayList<>();
-		while(!queue.isEmpty()) {
-			list.add(queue.poll());
+	public List<String> getPath(T from, T to)
+	{
+		boolean test = Dijkstra(from);
+		if (test==false) return null;
+		List<String> path = getShortestPath(findVertex(to));
+		return path;
+	}
+
+	@Override
+	public String toString()
+	{
+		String retval = "";
+		for (Vertex each : vertices)
+		{
+			retval += each.toString() + "\n";
 		}
-		Collections.sort(list);
-		for (int i = 0; i < list.size(); i++) {
-			queue.add(list.get(i));
+		return retval;
+	}
+
+
+	public String edgesToString()
+	{
+		String retval = "";
+		for (Edge each : edges)
+		{
+			retval += each + "\n";
 		}
-		return queue;
+		return retval;
+	}
+
+
+	class Vertex implements Comparable<Vertex>
+	{
+		T value;
+
+	
+		Vertex previous = null;
+		int minDistance = Integer.MAX_VALUE;
+
+		List<Vertex> incoming;
+		List<Vertex> outgoing;
+		State state;
+
+		
+		public Vertex(T value)
+		{
+			this.value = value;
+			incoming = new ArrayList<>();
+			outgoing = new ArrayList<>();
+			state = State.UNVISITED;
+		}
+
+		
+		@Override
+		public int compareTo(Vertex other)
+		{
+			return Integer.compare(minDistance, other.minDistance);
+		}
+
+		
+		public void addIncoming(Vertex vert)
+		{
+			incoming.add(vert);
+		}
+		public void addOutgoing(Vertex vert)
+		{
+			outgoing.add(vert);
+		}
+
+		
+		@Override
+		public String toString()
+		{
+			String retval = "";
+			retval += "Vertex: " + value + " : ";
+			retval += " In: ";
+			for (Vertex each : incoming) retval+= each.value + " ";
+			retval += "Out: ";
+			for (Vertex each : outgoing) retval += each.value + " ";
+			return retval;
+		}
+	}
+
+	class Edge
+	{
+		Vertex from;
+		Vertex to;
+		int cost;
+
+		
+		public Edge(T v1, T v2, int cost)
+		{
+			from = findVertex(v1);
+			if (from == null)
+			{
+				from = new Vertex(v1);
+				vertices.add(from);
+			}
+			to = findVertex(v2);
+			if (to == null)
+			{
+				to = new Vertex(v2);
+				vertices.add(to);
+			}
+			this.cost = cost;
+
+			from.addOutgoing(to);
+			to.addIncoming(from);
+		}
+
+		@Override
+		public String toString()
+		{
+			return "Edge From: " + from.value + " to: " + to.value + " cost: " + cost;
+		}
 	}
 }

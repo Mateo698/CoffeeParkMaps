@@ -1,6 +1,6 @@
 package model;
 
-public class Atracction {
+public class Atracction implements Comparable<Atracction>{
 	private String name;
 	private int averagePeople;
 	private int averageMinutes;

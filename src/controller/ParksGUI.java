@@ -86,7 +86,7 @@ public class ParksGUI {
 		if(!listViewAtracctionSelected.getItems().isEmpty()) {
 			ArrayList<Atracction> at = new ArrayList<>();
 			at.addAll(listViewAtracctionSelected.getItems());
-			at.addAll(park.getPath(park.getAtracctionsList().get(17), at));
+			at.addAll(park.getPath(park.getAtracctionsList().get(14), at));
 			ObservableList<Atracction> atracct = FXCollections.observableArrayList(at);
 			listViewAtracctionPath.setItems(atracct);
 		}else {
@@ -121,7 +121,7 @@ public class ParksGUI {
 		atracc = new ArrayList<>();
 		at = new ArrayList<>();
 		atracc.addAll(park.getAtracctionsList());
-		atracc.remove(17);
+		atracc.remove(14);
 		initComboBox();
 	}
 }
