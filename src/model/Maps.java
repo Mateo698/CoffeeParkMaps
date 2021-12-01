@@ -84,7 +84,7 @@ public class Maps {
 			Atracction end = results.getLastOne();
 			boolean leave = false;
 			previous = prev.get(end);
-			Atracction closest = previous;
+			Atracction closest = null;
 			while(!leave) {
 				previous_two = prev.get(end);
 				if(desiredAt.indexOf(previous)!=-1 && park.getEdge(src, previous)<=park.getEdge(src, closest) ) {
