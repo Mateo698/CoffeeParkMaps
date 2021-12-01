@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class Maps {
 	
@@ -71,9 +74,47 @@ public class Maps {
 		return atracctionsList;
 	}
 
-	public DijstraResults<Atracction> getPath(Atracction src) {
-		DijstraResults<Atracction> results = park.Dijstra(src, atracctionsList);
-		return results;
+	public PriorityQueue<Atracction> getPath(Atracction src, ArrayList<Atracction> desiredAt) {
+		PriorityQueue<Atracction> path = new PriorityQueue<Atracction>();
+		Atracction previous = null;
+		Atracction previous_two = null;
+		while(!desiredAt.isEmpty()) {
+			DijstraResults<Atracction> results = park.Dijstra(src, atracctionsList);
+			Hashtable<Atracction, Atracction> prev = results.getPrev();
+			Atracction end = results.getLastOne();
+			boolean leave = false;
+			Atracction closest = null;
+			previous = prev.get(end);
+			while(!leave) {
+				previous_two = prev.get(end);
+				if(desiredAt.indexOf(previous)!=-1) {
+					closest = previous;
+				}
+				if(previous_two == previous) {
+					leave = true;
+				}
+				previous = previous_two;
+			}
+			previous_two = null;
+			previous = prev.get(closest);
+			Stack<Atracction> subPath = new Stack<Atracction>();
+			subPath.push(closest);
+			leave = false;
+			while(!leave) {
+				previous_two = prev.get(previous);
+				if(previous == previous_two) {
+					leave = true;
+				}else {
+					subPath.push(previous);
+					previous = previous_two;
+				}
+			}
+			while(!subPath.isEmpty()) {
+				path.add(subPath.pop());
+			}
+			src = closest;
+		}
+		return path;
 	}
 	
 	
