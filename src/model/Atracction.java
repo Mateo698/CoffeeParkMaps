@@ -46,5 +46,12 @@ public class Atracction implements Comparable<Atracction>{
 	public String toString() {
 		return name;
 	}
+
+
+	@Override
+	public int compareTo(Atracction o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

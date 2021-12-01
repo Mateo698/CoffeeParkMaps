@@ -32,35 +32,32 @@ public class Maps {
 		atracctionsList.add(new Atracction("Estacion tren plaza", 0, 0));//15
 		atracctionsList.add(new Atracction("Estacion tren caballos", 0, 0));	//16
 		
-		for (int i = 0; i < atracctionsList.size(); i++) {
-			park.addVertex(atracctionsList.get(i));
-		}
-		park.addEdge(atracctionsList.get(14), atracctionsList.get(12), 5);
-		park.addEdge(atracctionsList.get(14), atracctionsList.get(13), 10);
-		park.addEdge(atracctionsList.get(14), atracctionsList.get(15), 5);
-		park.addEdge(atracctionsList.get(13), atracctionsList.get(12), 7);
-		park.addEdge(atracctionsList.get(12), atracctionsList.get(15), 10);
-		park.addEdge(atracctionsList.get(13), atracctionsList.get(15), 10);
-		park.addEdge(atracctionsList.get(15), atracctionsList.get(0), 5);
-		park.addEdge(atracctionsList.get(15), atracctionsList.get(1), 5);
-		park.addEdge(atracctionsList.get(0), atracctionsList.get(1), 3);
-		park.addEdge(atracctionsList.get(15), atracctionsList.get(3), 9);
-		park.addEdge(atracctionsList.get(15), atracctionsList.get(2), 7);
-		park.addEdge(atracctionsList.get(3), atracctionsList.get(2), 5);
-		park.addEdge(atracctionsList.get(3), atracctionsList.get(4), 7);
-		park.addEdge(atracctionsList.get(2), atracctionsList.get(4), 7);
-		park.addEdge(atracctionsList.get(4), atracctionsList.get(5), 5);
-		park.addEdge(atracctionsList.get(5), atracctionsList.get(9), 10);
-		park.addEdge(atracctionsList.get(9), atracctionsList.get(10), 5);
-		park.addEdge(atracctionsList.get(9), atracctionsList.get(11), 5);
-		park.addEdge(atracctionsList.get(10), atracctionsList.get(11), 5);
-		park.addEdge(atracctionsList.get(5), atracctionsList.get(16), 9);
-		park.addEdge(atracctionsList.get(16), atracctionsList.get(6), 5);
-		park.addEdge(atracctionsList.get(16), atracctionsList.get(7), 5);
-		park.addEdge(atracctionsList.get(16), atracctionsList.get(8), 5);
-		park.addEdge(atracctionsList.get(6), atracctionsList.get(7), 4);
-		park.addEdge(atracctionsList.get(7), atracctionsList.get(8), 4);
-		park.addEdge(atracctionsList.get(15), atracctionsList.get(16), 10);
+		park.add(atracctionsList.get(14), atracctionsList.get(12), 5);
+		park.add(atracctionsList.get(14), atracctionsList.get(13), 10);
+		park.add(atracctionsList.get(14), atracctionsList.get(15), 5);
+		park.add(atracctionsList.get(13), atracctionsList.get(12), 7);
+		park.add(atracctionsList.get(12), atracctionsList.get(15), 10);
+		park.add(atracctionsList.get(13), atracctionsList.get(15), 10);
+		park.add(atracctionsList.get(15), atracctionsList.get(0), 5);
+		park.add(atracctionsList.get(15), atracctionsList.get(1), 5);
+		park.add(atracctionsList.get(0), atracctionsList.get(1), 3);
+		park.add(atracctionsList.get(15), atracctionsList.get(3), 9);
+		park.add(atracctionsList.get(15), atracctionsList.get(2), 7);
+		park.add(atracctionsList.get(3), atracctionsList.get(2), 5);
+		park.add(atracctionsList.get(3), atracctionsList.get(4), 7);
+		park.add(atracctionsList.get(2), atracctionsList.get(4), 7);
+		park.add(atracctionsList.get(4), atracctionsList.get(5), 5);
+		park.add(atracctionsList.get(5), atracctionsList.get(9), 10);
+		park.add(atracctionsList.get(9), atracctionsList.get(10), 5);
+		park.add(atracctionsList.get(9), atracctionsList.get(11), 5);
+		park.add(atracctionsList.get(10), atracctionsList.get(11), 5);
+		park.add(atracctionsList.get(5), atracctionsList.get(16), 9);
+		park.add(atracctionsList.get(16), atracctionsList.get(6), 5);
+		park.add(atracctionsList.get(16), atracctionsList.get(7), 5);
+		park.add(atracctionsList.get(16), atracctionsList.get(8), 5);
+		park.add(atracctionsList.get(6), atracctionsList.get(7), 4);
+		park.add(atracctionsList.get(7), atracctionsList.get(8), 4);
+		park.add(atracctionsList.get(15), atracctionsList.get(16), 10);
 	}
 	
 	
@@ -73,60 +70,8 @@ public class Maps {
 	}
 
 	public PriorityQueue<Atracction> getPath(Atracction src, ArrayList<Atracction> desiredAt) {
-		PriorityQueue<Atracction> path = new PriorityQueue<Atracction>();
-		Atracction previous = null;
-		Atracction previous_two = null;
-		while(!desiredAt.isEmpty()) {
-			DijstraResults<Atracction> results = park.Dijstra(src, atracctionsList);
-			printHash(results.getPrev(),results.getLastOne());
-			Hashtable<Atracction, Atracction> prev = results.getPrev();
-			Atracction end = results.getLastOne();
-			boolean leave = false;
-			previous = prev.get(end);
-			Atracction closest = null;
-			while(!leave) {
-				previous_two = prev.get(end);
-				System.out.println(previous + " " + previous_two);
-				if(desiredAt.indexOf(previous)!=-1) {
-					closest = previous;
-				}
-				if(previous_two == previous) {
-					leave = true;
-				}
-				previous = previous_two;
-			}
-			previous_two = null;
-			previous = prev.get(closest);
-			Stack<Atracction> subPath = new Stack<Atracction>();
-			subPath.push(closest);
-			leave = false;
-			while(!leave) {
-				previous_two = prev.get(previous);
-				if(previous == previous_two) {
-					leave = true;
-				}else {
-					subPath.push(previous);
-					previous = previous_two;
-				}
-			}
-			while(!subPath.isEmpty()) {
-				path.add(subPath.pop());
-			}
-			int index = desiredAt.indexOf(closest);
-			desiredAt.remove(index);
-			src = closest;
-		}
-		return path;
+		return null;
 	}
-
-
-	private void printHash(Hashtable<Atracction, Atracction> prev, Atracction last) {
-		for (int i = 0; i < atracctionsList.size(); i++) {
-			System.out.println(i + " " + prev.get(atracctionsList.get(i)).toString());
-			System.out.println("\n");
-		}
-	}
-	
 
 	
 }

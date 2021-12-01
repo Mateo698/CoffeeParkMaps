@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Collections;
 
-@SuppressWarnings("unchecked")
 public class GraphAdjList<T extends Comparable<T>>
 {
 	public enum State { UNVISITED, VISITED, COMPLETE };
@@ -16,24 +15,20 @@ public class GraphAdjList<T extends Comparable<T>>
 	private ArrayList<Edge> edges;
 
 	
-	public GraphAdjList()
-	{
+	public GraphAdjList()	{
 		vertices = new ArrayList<>();
 		edges = new ArrayList<>();
 	}
 
 	
-	public void add(T from, T to, int cost)
-	{
+	public void add(T from, T to, int cost)	{
 		Edge temp = findEdge(from, to);
-		if (temp != null)
-		{
+		if (temp != null){
 
 			System.out.println("Edge " + from + "," + to + " already exists. Changing cost.");
 			temp.cost = cost;
 		}
-		else
-		{
+		else{
 			
 			Edge e = new Edge(from, to, cost);
 			edges.add(e);
@@ -43,8 +38,7 @@ public class GraphAdjList<T extends Comparable<T>>
 	
 	private Vertex findVertex(T v)
 	{
-		for (Vertex each : vertices)
-		{
+		for (Vertex each : vertices){
 			if (each.value.compareTo(v)==0)
 				return each;
 		}
@@ -52,8 +46,7 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	private Edge findEdge(Vertex v1, Vertex v2)
-	{
+	private Edge findEdge(Vertex v1, Vertex v2){
 		for (Edge each : edges)
 		{
 			if (each.from.equals(v1) && each.to.equals(v2))
@@ -65,8 +58,7 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	private Edge findEdge(T from, T to)
-	{
+	private Edge findEdge(T from, T to){
 		for (Edge each : edges)
 		{
 			if (each.from.value.equals(from) && each.to.value.equals(to))
@@ -78,8 +70,7 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	private void clearStates()
-	{
+	private void clearStates(){
 		for (Vertex each : vertices)
 		{
 			each.state = State.UNVISITED;
@@ -87,8 +78,7 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	public boolean isConnected()
-	{
+	public boolean isConnected(){
 		for (Vertex each : vertices)
 		{
 			if (each.state != State.COMPLETE)
@@ -98,26 +88,19 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	public boolean DepthFirstSearch()
-	{
+	public boolean DepthFirstSearch(){
 		if (vertices.isEmpty()) return false;
 
 		clearStates();
-		// get first node
 		Vertex root = vertices.get(0);
 		if (root==null) return false;
-
-		// call recursive function
 		DepthFirstSearch(root);
 		return isConnected();
 	}
 
 	
-	private void DepthFirstSearch(Vertex v)
-	{
+	private void DepthFirstSearch(Vertex v){
 		v.state = State.VISITED;
-
-		// loop through neighbors
 		for (Vertex each : v.outgoing)
 		{
 			if (each.state ==State.UNVISITED)
@@ -129,11 +112,9 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	public boolean BreadthFirstSearch()
-	{
+	public boolean BreadthFirstSearch(){
 		if (vertices.isEmpty()) return false;
 		clearStates();
-
 		Vertex root = vertices.get(0);
 		if (root==null) return false;
 
@@ -159,8 +140,7 @@ public class GraphAdjList<T extends Comparable<T>>
 	}
 
 	
-	public boolean BreadthFirstSearch(T v1)
-	{
+	public boolean BreadthFirstSearch(T v1){
 		if (vertices.isEmpty()) return false;
 		clearStates();
 
@@ -346,8 +326,7 @@ public class GraphAdjList<T extends Comparable<T>>
 		}
 	}
 
-	class Edge
-	{
+	class Edge{
 		Vertex from;
 		Vertex to;
 		int cost;
@@ -370,7 +349,9 @@ public class GraphAdjList<T extends Comparable<T>>
 			this.cost = cost;
 
 			from.addOutgoing(to);
+			from.addIncoming(to);
 			to.addIncoming(from);
+			to.addOutgoing(from);
 		}
 
 		@Override
