@@ -5,74 +5,46 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 class GraphAdjListTest {
-	
-	ArrayList<Atracction> atracctionsList;
-	GraphAdjList<Atracction> park;
-	Atracction g1,g2,g3;
-	
+	private Maps park;
 	public void setupScenary1() {
-		atracctionsList = new ArrayList<>();
-		park = new GraphAdjList<Atracction>(false);
-		g1 = new Atracction("Ciclon", 25, 10);
-		g2 =new Atracction("Cumbre", 40, 45);
-		g3 = new Atracction("Rapidos", 30, 25);
-		atracctionsList.add(g1);
-		atracctionsList.add(g2);
-		atracctionsList.add(g3);
-		park.addVertex(g1);
-		park.addVertex(g2);
-		park.addVertex(g3);
-		park.addEdge(g1, g2, 12);
+		park = new Maps();
 	}
 	
 	@Test
 	void testAddVertex() {
 		setupScenary1();
-		assertEquals(park.getNodesAmount(),3);
-		atracctionsList.add(new Atracction("Caballos", 10, 15));
-		park.addVertex(new Atracction("Caballos", 10, 15));
-		assertEquals(park.getNodesAmount(),4);
+		assertEquals(park.getAtracctionsList().size(),18);
+		assertEquals(park.getPark().getVertices().size(),18);
+		Atracction at=new Atracction("Salida", 10, 15);
+		park.getAtracctionsList().add(at);
+		park.getPark().add(at,park.getAtracctionsList().get(1),10);
+		assertEquals(park.getAtracctionsList().size(),19);
+		assertEquals(park.getPark().getVertices().size(),19);
+		assertEquals(park.getAtracctionsList().get(18).getName(),"Salida");
 	}
 	
 	@Test
-	void testAddEdge() {
+	void pathTest() {
 		setupScenary1();
-		park.addEdge(g2, g3, 38);
-		park.addEdge(g3, g1, 50);
-		assertEquals(park.getNodes().get(g1).get(0).getWeight(),12);
-		assertEquals(park.getNodes().get(g1).get(1).getWeight(),50);
-		assertEquals(park.getNodes().get(g2).get(0).getWeight(),12);
-		assertEquals(park.getNodes().get(g2).get(1).getWeight(),38);
-		assertEquals(park.getNodes().get(g3).get(0).getWeight(),38);
-		assertEquals(park.getNodes().get(g3).get(1).getWeight(),50);
+		Atracction temp1= park.getAtracctionsList().get(0);
+		Atracction temp2= park.getAtracctionsList().get(5);
+		assertEquals(park.getPark().getPath(temp1, temp2).size(),3);
+		temp1= park.getAtracctionsList().get(0);
+		temp2= park.getAtracctionsList().get(10);
+		assertEquals(park.getPark().getPath(temp1, temp2).size(),5);
+	}
+	
+	@Test
+	void getShortestPathTest() {
+		setupScenary1();
+		ArrayList<Atracction> at = new ArrayList<>();
+		at.add(new Atracction("Karts Dobles", 0, 0));
+		at.add(new Atracction("Ciclon", 0, 0));
+		at.add(new Atracction("Karts", 0, 0));
+		assertEquals(park.getPath(park.getAtracctionsList().get(17),at).size(),8);
+	}
+	
+	
 
-	}
-	
-	@Test
-	void djistraTest() {
-		setupScenary1();
-		park.addEdge(g2, g3, 38);
-		park.addEdge(g3, g1, 50);
-		assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g1),0);
-		assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g2),12);
-		assertEquals(park.Dijstra(g1, atracctionsList).getDist().get(g3),50);
-	}
-	
-	@Test
-	void floydTest() {
-		setupScenary1();
-		park.addEdge(g2, g3, 38);
-		park.addEdge(g3, g1, 50);
-		int[][] a = park.Floyd();
-		assertEquals(a[0][0],0);
-		assertEquals(a[0][1],12);
-		assertEquals(a[0][2],50);
-		assertEquals(a[1][0],12);
-		assertEquals(a[1][1],0);
-		assertEquals(a[1][2],38);
-		assertEquals(a[2][2],0);
-		assertEquals(a[2][1],38);
-		assertEquals(a[2][0],50);
-	}
 
 }
