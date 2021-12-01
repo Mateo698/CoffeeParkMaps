@@ -62,6 +62,11 @@ public class Maps {
 		park.addEdge(atracctionsList.get(17), atracctionsList.get(4), 10);
 	}
 	
+	
+	public GraphAdjList<Atracction> getPark() {
+		return park;
+	}
+
 	public ArrayList<Atracction> getAtracctionsList() {
 		return atracctionsList;
 	}

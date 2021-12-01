@@ -7,7 +7,6 @@ public class Atracction {
 	
 	
 	public Atracction(String name, int averagePeople, int averageMinutes) {
-		super();
 		this.name = name;
 		this.averagePeople = averagePeople;
 		this.averageMinutes = averageMinutes;
@@ -43,6 +42,9 @@ public class Atracction {
 		this.averageMinutes = averageMinutes;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return name;
+	}
 	
 }

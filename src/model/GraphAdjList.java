@@ -21,12 +21,15 @@ public class GraphAdjList<T> {
 		nodes.put(object,new LinkedList<Edge<T>>());
 		keys.add(object);
 	}
+	
 	public int getNodesAmount() {
 		return nodes.size();
 	}
+	
 	public Hashtable<T,LinkedList<Edge<T>>> getNodes(){
 		return nodes;
 	}
+	
 	public void addEdge(T start, T end,int weight) {
 		if(!nodes.containsKey(start)) {
 			addVertex(start);
@@ -39,6 +42,7 @@ public class GraphAdjList<T> {
 			nodes.get(end).add(new Edge<T>(start,weight));
 		}
 	}
+	
 	/*
 	public boolean hasVertex(T object) {
 		if(nodes.containsKey(object)) {

@@ -1,15 +1,19 @@
 package controller;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -25,48 +29,39 @@ public class ParksGUI {
 	
 	@FXML
     private Pane mainPane;
+	
     @FXML
     private ImageView mapImage;
     
     @FXML
-    private Label lblTitle1;
+    private ListView<Atracction> listViewAtracction;
 
     @FXML
-    private Label lblEnd;
+    private Label lblTitle;
 
     @FXML
-    private Label lblStart;
-
-    @FXML
-    private ChoiceBox<Atracction> choiceBoxStart;
-
-    @FXML
-    private ChoiceBox<Atracction> choiceBoxEnd;
-
-    @FXML
-    private Label lblTitle2;
-
-    @FXML
-    private TableView<Atracction> tableVewAttraction;
-
-    @FXML
-    private TableColumn<Atracction, String> columnStart;
-
-    @FXML
-    private TableColumn<Atracction, String> columnEnd;
-
-    @FXML
-    private TableColumn<Atracction, String> columnDistance;
-
-    @FXML
-    void calculateEachOne(ActionEvent event) {
-
+    public void calculateStartEnd(ActionEvent event) {
+    	ArrayList<Atracction> at = new ArrayList<>();
+    	if(!listViewAtracction.getSelectionModel().getSelectedItems().isEmpty()) {
+    		
+    	}else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Empty fields");
+			alertWarnings.setContentText("Please check the info.");
+			alertWarnings.show();
+    	}
     }
 
-    @FXML
-    void calculateStartEnd(ActionEvent event) {
-
+    private void initListView() {
+    	ArrayList<Atracction> at = new ArrayList<>();
+    	at=park.getAtracctionsList();
+    	at.remove(17);
+    	ObservableList <Atracction> atracction = FXCollections.observableArrayList(at);
+    	listViewAtracction.setItems(atracction);
+    	listViewAtracction.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
+ 
     
     public void startProgram() throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/screens/mapWindow.fxml"));
@@ -76,6 +71,7 @@ public class ParksGUI {
 		mainPane.getChildren().setAll(root);
 		File f = new File(MAP_IMAGE_PATH);
 		Image img = new Image(f.toURI().toString());
-		this.mapImage.setImage(img);	
+		this.mapImage.setImage(img);
+		initListView();
     }
 }
