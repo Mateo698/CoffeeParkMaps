@@ -112,6 +112,8 @@ public class Maps {
 			while(!subPath.isEmpty()) {
 				path.add(subPath.pop());
 			}
+			int index = desiredAt.indexOf(closest);
+			desiredAt.remove(index);
 			src = closest;
 		}
 		return path;
