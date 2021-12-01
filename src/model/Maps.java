@@ -28,6 +28,7 @@ public class Maps {
 		atracctionsList.add(new Atracction("Museo del cafe", 0, 0));	//14
 		atracctionsList.add(new Atracction("Estacion tren plaza", 0, 0));//15
 		atracctionsList.add(new Atracction("Estacion tren caballos", 0, 0));	//16
+		atracctionsList.add(new Atracction("Entrada", 0, 0));	//17
 		for (int i = 0; i < atracctionsList.size(); i++) {
 			park.addVertex(atracctionsList.get(i));
 		}
@@ -57,6 +58,8 @@ public class Maps {
 		park.addEdge(atracctionsList.get(6), atracctionsList.get(7), 4);
 		park.addEdge(atracctionsList.get(7), atracctionsList.get(8), 4);
 		park.addEdge(atracctionsList.get(15), atracctionsList.get(16), 10);
+		park.addEdge(atracctionsList.get(17), atracctionsList.get(0), 20);
+		park.addEdge(atracctionsList.get(17), atracctionsList.get(4), 10);
 	}
 	
 	public ArrayList<Atracction> getAtracctionsList() {

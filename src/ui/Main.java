@@ -22,8 +22,6 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("screens/mainPane.fxml"));
@@ -33,6 +31,7 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
+		pGUI.startProgram();
 	}
 
 }
