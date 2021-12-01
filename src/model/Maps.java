@@ -58,7 +58,7 @@ public class Maps {
 		park.add(atracctionsList.get(7), atracctionsList.get(8), 4);
 		park.add(atracctionsList.get(15), atracctionsList.get(16), 10);
 		park.add(atracctionsList.get(17), atracctionsList.get(0), 20);
-		park.add(atracctionsList.get(17), atracctionsList.get(4), 10);
+		park.add(atracctionsList.get(17), atracctionsList.get(1), 10);
 	}
 	
 	

@@ -58,6 +58,8 @@ public class ParksGUI {
 	private ArrayList<Atracction> atracc;
 	
 	private ArrayList<Atracction> at;
+	
+	private ArrayList<String> path;
 
 	@FXML
 	public void addAtracctionToList(ActionEvent event) {
@@ -86,8 +88,8 @@ public class ParksGUI {
 		if(!listViewAtracctionSelected.getItems().isEmpty()) {
 			ArrayList<Atracction> at = new ArrayList<>();
 			at.addAll(listViewAtracctionSelected.getItems());
-			ObservableList<String> atracct = FXCollections.observableArrayList(park.getPath(park.getAtracctionsList().get(17), at));
-			listViewAtracctionPath.setItems(atracct);
+			path.addAll(park.getPath(park.getAtracctionsList().get(17), at));
+			initListResultsView(path);
 		}else {
 			Alert alertWarnings = new Alert(AlertType.WARNING);
 			alertWarnings.setTitle("Error");
@@ -100,8 +102,27 @@ public class ParksGUI {
 	private void initListView(ArrayList<Atracction> at) {
 		ObservableList<Atracction> atracct = FXCollections.observableArrayList(at);
 		listViewAtracctionSelected.setItems(atracct);
-
 	}
+	
+	private void initListResultsView(ArrayList<String> at) {
+		ObservableList<String> atracct = FXCollections.observableArrayList(at);
+		listViewAtracctionPath.setItems(atracct);
+	}
+	
+    @FXML
+    public void resetAll(ActionEvent event) {
+    	resetValues();
+    }
+    private void resetValues() {
+    	path = new ArrayList<>();
+    	atracc = new ArrayList<>();
+		at = new ArrayList<>();
+		atracc.addAll(park.getAtracctionsList());
+		atracc.remove(14);
+		initComboBox();
+		initListView(at);
+		initListResultsView(path);
+    }
 
 
 	public void startProgram() throws IOException {
@@ -117,10 +138,8 @@ public class ParksGUI {
 		lblTitle1.setText("Selected atracctions");
 		lblTitle2.setText("The shortest path to visit all the selected atracctions is");
 		lblTitle3.setText("Just follow this list from start to finish");
-		atracc = new ArrayList<>();
-		at = new ArrayList<>();
-		atracc.addAll(park.getAtracctionsList());
-		atracc.remove(14);
-		initComboBox();
+		listViewAtracctionSelected.setDisable(true);
+		listViewAtracctionPath.setDisable(true);
+		resetValues();
 	}
 }
